@@ -1,8 +1,9 @@
 <!-- The page must list the name of the player,
-  as well as the amount of “points” that was scored by the player. 
-  The list must be sortable by the score. At the end of the list, 
-  there should be a way for a user to input more scores into the 
+  as well as the amount of “points” that was scored by the player.
+  The list must be sortable by the score. At the end of the list,
+  there should be a way for a user to input more scores into the
   list. -->
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -13,7 +14,6 @@
 
   <!-- Program composition -->
   <body>
-
     <div id="app">
       <h1>Scoreboard Application</h1>
       <table>
@@ -22,17 +22,9 @@
           <th>Score</th>
         </tr>
         <tr is="player-score"
-          v-for="player in players" 
-          v-bind:player="player" 
-          v-bind:key="player.name"
-        ></tr>
-        <!-- <template v-for="player in players">
-          <tr>
-            <td>{{player.name}}</td>
-            <td>{{player.score}}</td>
-            <td><button v-on:click="incrementScore()">[+]</button></td>
-          </tr>
-        </template>-->
+          v-for="player in players"
+          v-bind:player="player"
+          v-bind:key="player.name"></tr>
       </table>
 
       <div class="controls">
@@ -49,7 +41,6 @@
         <button v-on:click="sortByScore()">Sort by score</button>
       </div>
     </div>
-
   </body>
 
   <!-- Program logic -->
@@ -63,7 +54,7 @@
         <tr>
           <td>{{ player.name }}</td>
           <td>{{ player.score }}</td>
-          <td><button v-on:click="function() { 
+          <td><button v-on:click="function() {
             var x = parseInt(player.score);
             x += 1;
             player.score = x;
@@ -76,7 +67,7 @@
       el: '#app',
       data: {
         player: {},
-        players: [ 
+        players: [
           { name: 'Koivu', score: 1 },
           { name: 'Mats',  score: 2 }
         ]
@@ -85,13 +76,12 @@
       methods: {
 
         /**
-         * Adds a new player. 
+         * Adds a new player.
          * No assumptions.
-         * Won't make an nameless player. 
+         * Won't make a nameless player.
          * Changes NaN or negative score to 0.
          */
         addPlayer: function() {
-          console.log("addPlayer");
           if (!this.player.name == "") {
             if (isNaN(this.player.score) || this.player.score < 0) {
               this.player.score = 0;
@@ -104,11 +94,10 @@
         },
 
         /**
-         * Descending order sort. 
+         * Descending order sort.
          * Assumes score can be parsed into integer.
          */
         sortByScore: function() {
-          console.log("sortByScore");
           vm.players.sort(function(a, b) {
             return parseInt(b.score) - parseInt(a.score);
           })
@@ -116,11 +105,10 @@
 
         /*
          * TODO make <player-score> use this for clarity.
-         * Increments score of the player on the same table row by 1. 
+         * Increments score of the player on the same table row by 1.
          * No assumptions.
          */
         incrementScore: function() {
-          console.log("incrementScore");
           var x = parseInt(player.score);
           x += 1;
           this.player.score = x;
@@ -128,8 +116,5 @@
       }
     })
 
-
-
   </script>
-
 </html>
