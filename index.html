@@ -14,7 +14,7 @@
   <!-- Program composition -->
   <body>
 
-    <div id="table">
+    <div id="app">
       <table>
         <tr>
           <th>Player</th>
@@ -25,22 +25,18 @@
             <tr>
               <td>{{player.name}}</td>
               <td>{{player.score}}</td>
+              <td><button v-on:click="incrementScore()">[+]</button></td>
             </tr>
           </template>
         </tbody>
       </table>
-    </div>
 
-    <div id="controls">
-      <div id="add-player">
-        <label for="name">Name:</label>
-        <input type="text" name="name">
-        <label for="score">Score:</label>
-        <input type="text" name="score">
-        <button>Done</button>
-      </div>
-      <div id="sort-by-score"></div>
-        <button>Sort by score</button>
+      <label for="name">Name:</label>
+      <input type="text" name="name" v-model="player.name">
+      <label for="score">Score:</label>
+      <input type="text" name="score" v-model="player.score">
+      <button v-on:click="addPlayer()">Done</button>
+      <button v-on:click="sortByScore()">Sort by score</button>
     </div>
 
   </body>
@@ -54,13 +50,43 @@
       props: ['name', 'score']
     })
 
-    new Vue({
-      el: '#table',
+    var vm = new Vue({
+      el: '#app',
       data: {
+        player: {},
         players: [ 
-          { name: 'Koivu', score: '1', show: true },
-          { name: 'Mats',  score: '2', show: true }
+          { name: 'Koivu', score: '1' },
+          { name: 'Mats',  score: '2' }
         ]
+      },
+      methods: {
+
+        /**
+         * Adds a new player. No assumptions.
+         */
+        addPlayer: function() {
+          console.log("addPlayer");
+          vm.players.push(vm.player);
+          vm.player = {};
+        },
+
+        /**
+         * Descending order sort. Assumes score can be parsed into integer.
+         */
+        sortByScore: function() {
+          console.log("sortByScore");
+          vm.players.sort(function(a, b) {
+            return parseInt(b.score) - parseInt(a.score);
+          })
+        },
+
+        /*
+         * TODO
+         * Increments score of the player on the same table row by 1. 
+         */
+        incrementScore: function() {
+          console.log("incrementScore");
+        }
       }
     })
 
