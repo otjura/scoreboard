@@ -48,7 +48,9 @@
   <script>
 
     Vue.component('player-score', {
-      props: ['player'],
+      props: {
+        player: Object
+      },
       template: `
         <tr>
           <td>{{ player.name }}</td>
@@ -66,24 +68,35 @@
       data: {
         player: {},
         players: [ 
-          { name: 'Koivu', score: '1' },
-          { name: 'Mats',  score: '2' }
+          { name: 'Koivu', score: 1 },
+          { name: 'Mats',  score: 2 }
         ]
       },
 
       methods: {
 
         /**
-         * Adds a new player. No assumptions.
+         * Adds a new player. 
+         * No assumptions.
+         * Won't make an nameless player. 
+         * Changes NaN or negative score to 0.
          */
         addPlayer: function() {
           console.log("addPlayer");
-          vm.players.push(vm.player);
-          vm.player = {};
+          if (!this.player.name == "") {
+            if (isNaN(this.player.score) || this.player.score < 0) {
+              this.player.score = 0;
+            }
+            this.players.push(this.player);
+            this.player = { name: "", score: "" }; // clear fields
+          } else {
+            alert("Give player name!");
+          }
         },
 
         /**
-         * Descending order sort. Assumes score can be parsed into integer.
+         * Descending order sort. 
+         * Assumes score can be parsed into integer.
          */
         sortByScore: function() {
           console.log("sortByScore");
@@ -95,12 +108,13 @@
         /*
          * TODO make <player-score> use this for clarity.
          * Increments score of the player on the same table row by 1. 
+         * No assumptions.
          */
         incrementScore: function() {
           console.log("incrementScore");
           var x = parseInt(player.score);
           x += 1;
-          player.score = x;
+          this.player.score = x;
         }
       }
     })
