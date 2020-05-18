@@ -1,0 +1,71 @@
+<!-- The page must list the name of the player,
+  as well as the amount of “points” that was scored by the player. 
+  The list must be sortable by the score. At the end of the list, 
+  there should be a way for a user to input more scores into the 
+  list. -->
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>Scoreboard Application</title>
+      <link rel="stylesheet" type="text/css" href="style.css"/>
+      <script src="vue.js"></script>
+  </head>
+
+  <!-- Program composition -->
+  <body>
+
+    <div id="table">
+      <table>
+        <tr>
+          <th>Player</th>
+          <th>Score</th>
+        </tr>
+        <tbody>
+          <template v-for="player in players">
+            <tr>
+              <td>{{player.name}}</td>
+              <td>{{player.score}}</td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="controls">
+      <div id="add-player">
+        <label for="name">Name:</label>
+        <input type="text" name="name">
+        <label for="score">Score:</label>
+        <input type="text" name="score">
+        <button>Done</button>
+      </div>
+      <div id="sort-by-score"></div>
+        <button>Sort by score</button>
+    </div>
+
+  </body>
+
+  <!-- Program logic -->
+  <script>
+
+    Vue.component('player-score', {
+      template: 
+      '<tr><td>{{name}}</td><td>{{score}}</td></tr>',
+      props: ['name', 'score']
+    })
+
+    new Vue({
+      el: '#table',
+      data: {
+        players: [ 
+          { name: 'Koivu', score: '1', show: true },
+          { name: 'Mats',  score: '2', show: true }
+        ]
+      }
+    })
+
+
+
+  </script>
+
+</html>
