@@ -15,6 +15,7 @@
   <body>
 
     <div id="app">
+      <h1>Scoreboard Application</h1>
       <table>
         <tr>
           <th>Player</th>
@@ -34,12 +35,19 @@
         </template>-->
       </table>
 
-      <label for="name">Name:</label>
-      <input type="text" name="name" v-model="player.name">
-      <label for="score">Score:</label>
-      <input type="text" name="score" v-model="player.score">
-      <button v-on:click="addPlayer()">Done</button>
-      <button v-on:click="sortByScore()">Sort by score</button>
+      <div class="controls">
+        <h3>Add a New Player</h3>
+        <div class="input-bundle">
+          <label for="name">Name:</label>
+          <input type="text" name="name" v-model="player.name" autofocus>
+        </div>
+        <div class="input-bundle">
+          <label for="score">Score:</label>
+          <input type="text" name="score" v-model="player.score">
+        </div>
+        <button v-on:click="addPlayer()">Done</button>
+        <button v-on:click="sortByScore()">Sort by score</button>
+      </div>
     </div>
 
   </body>
@@ -58,7 +66,8 @@
           <td><button v-on:click="function() { 
             var x = parseInt(player.score);
             x += 1;
-            player.score = x;}">[+]</button></td>
+            player.score = x;
+          }">+</button></td>
         </tr>
       `
     })
