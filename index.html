@@ -20,15 +20,18 @@
           <th>Player</th>
           <th>Score</th>
         </tr>
-        <tbody>
-          <template v-for="player in players">
-            <tr>
-              <td>{{player.name}}</td>
-              <td>{{player.score}}</td>
-              <td><button v-on:click="incrementScore()">[+]</button></td>
-            </tr>
-          </template>
-        </tbody>
+        <player-score 
+          v-for="player in players" 
+          v-bind:player="player" 
+          v-bind:key="player.name"
+        ></player-score>
+        <!-- <template v-for="player in players">
+          <tr>
+            <td>{{player.name}}</td>
+            <td>{{player.score}}</td>
+            <td><button v-on:click="incrementScore()">[+]</button></td>
+          </tr>
+        </template>-->
       </table>
 
       <label for="name">Name:</label>
@@ -45,9 +48,17 @@
   <script>
 
     Vue.component('player-score', {
-      template: 
-      '<tr><td>{{name}}</td><td>{{score}}</td></tr>',
-      props: ['name', 'score']
+      props: ['player'],
+      template: `
+        <tr>
+          <td>{{ player.name }}</td>
+          <td>{{ player.score }}</td>
+          <td><button v-on:click="function() { 
+            var x = parseInt(player.score);
+            x += 1;
+            player.score = x;}">[+]</button></td>
+        </tr>
+      `
     })
 
     var vm = new Vue({
@@ -59,6 +70,7 @@
           { name: 'Mats',  score: '2' }
         ]
       },
+
       methods: {
 
         /**
@@ -81,11 +93,14 @@
         },
 
         /*
-         * TODO
+         * TODO make <player-score> use this for clarity.
          * Increments score of the player on the same table row by 1. 
          */
         incrementScore: function() {
           console.log("incrementScore");
+          var x = parseInt(player.score);
+          x += 1;
+          player.score = x;
         }
       }
     })
